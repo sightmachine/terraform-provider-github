@@ -31,6 +31,12 @@ func resourceGithubBranchDefault() *schema.Resource {
 				ForceNew:    true,
 				Description: "The GitHub repository.",
 			},
+			"orgs_default_branch": {
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
+				Description: "The organization default branch",
+			},
 			"rename": {
 				Type:        schema.TypeBool,
 				Optional:    true,
@@ -121,9 +127,10 @@ func resourceGithubBranchDefaultDelete(d *schema.ResourceData, meta interface{})
 	client := meta.(*Owner).v3client
 	owner := meta.(*Owner).name
 	repoName := d.Id()
+	orgsDefaultBranch := d.Get("orgs_default_branch").(string)
 
 	repository := &github.Repository{
-		DefaultBranch: nil,
+		DefaultBranch: &orgsDefaultBranch,
 	}
 
 	ctx := context.Background()
