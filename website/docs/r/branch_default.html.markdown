@@ -31,6 +31,7 @@ resource "github_branch" "development" {
 
 resource "github_branch_default" "default"{
   repository = github_repository.example.name
+  orgs_default_branch = "main"
   branch     = github_branch.development.branch
 }
 ```
@@ -47,6 +48,7 @@ resource "github_repository" "example" {
 resource "github_branch_default" "default"{
   repository = github_repository.example.name
   branch     = "development"
+  orgs_default_branch = "main"
   rename     = true
 }
 ```
@@ -57,6 +59,7 @@ The following arguments are supported:
 
 * `repository` - (Required) The GitHub repository
 * `branch` - (Required) The branch (e.g. `main`)
+* `orgs_default_branch` - (Required) your default organization branch name
 * `rename` - (Optional) Indicate if it should rename the branch rather than use an existing branch. Defaults to `false`. 
 
 ## Import
